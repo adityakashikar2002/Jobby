@@ -44,46 +44,6 @@ export const getProfile = async () => {
   }
 };
 
-// export const getJobs = async (filters = {}) => {
-//   try {
-//     const params = {};
-    
-//     if (filters.employmentType?.length > 0) {
-//       params.employment_type = filters.employmentType.join(',');
-//     }
-//     if (filters.minimumPackage) {
-//       params.minimum_package = filters.minimumPackage;
-//     }
-//     if (filters.search) {
-//       params.search = filters.search;
-//     }
-//     if (filters.location) {
-//       params.location = filters.location;
-//     }
-//     if (filters.skills) {
-//       params.skills = filters.skills;
-//     }
-
-//     const response = await axiosInstance.get('/jobs', { params });
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(
-//       error.response?.data?.error_msg || 'Failed to fetch jobs data'
-//     );
-//   }
-// };
-
-// export const getJobDetails = async (id) => {
-//   try {
-//     const response = await axiosInstance.get(`/jobs/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(
-//       error.response?.data?.error_msg || 'Failed to fetch job details'
-//     );
-//   }
-// };
-
 export const getJobs = async (filters = {}) => {
   try {
     const params = {};
