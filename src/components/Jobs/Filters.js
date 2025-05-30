@@ -8,8 +8,7 @@
 //   FormControlLabel,
 //   RadioGroup,
 //   Radio,
-//   Slider,
-//   Typography,
+//   TextField,
 //   Divider,
 // } from '@mui/material';
 // import './Filters.css';
@@ -47,6 +46,14 @@
 //     onChange({ ...filters, minimumPackage: e.target.value });
 //   };
 
+//   const handleLocationChange = (e) => {
+//     onChange({ ...filters, location: e.target.value });
+//   };
+
+//   const handleSkillsChange = (e) => {
+//     onChange({ ...filters, skills: e.target.value });
+//   };
+
 //   return (
 //     <motion.div
 //       className="filters-container"
@@ -65,6 +72,26 @@
 //           </div>
 //         </div>
 //       )}
+
+//       <Divider sx={{ my: 2 }} />
+
+//       <TextField
+//         label="Location"
+//         variant="outlined"
+//         fullWidth
+//         value={filters.location}
+//         onChange={handleLocationChange}
+//         margin="normal"
+//       />
+
+//       <TextField
+//         label="Skills"
+//         variant="outlined"
+//         fullWidth
+//         value={filters.skills}
+//         onChange={handleSkillsChange}
+//         margin="normal"
+//       />
 
 //       <Divider sx={{ my: 2 }} />
 
@@ -117,8 +144,6 @@
 // export default Filters;
 
 
-
-// src/components/Jobs/Filters.js
 import React from 'react';
 import { motion } from 'framer-motion';
 import {

@@ -1,7 +1,7 @@
 // import React, { useState, useEffect } from 'react';
 // import { motion, AnimatePresence } from 'framer-motion';
 // import { useAuth } from '../../context/AuthContext';
-// import { getJobs, getProfile } from '../../services/api';
+// import { getJobs } from '../../services/api';
 // import JobCard from './JobCard';
 // import Drawer from '../Common/Drawer';
 // import Filters from './Filters';
@@ -14,25 +14,23 @@
 //   const [filteredJobs, setFilteredJobs] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState('');
-//   const [profile, setProfile] = useState(null);
 //   const [filters, setFilters] = useState({
 //     employmentType: [],
 //     minimumPackage: '',
 //     search: '',
+//     location: '',
+//     skills: ''
 //   });
 
-//   const { authToken } = useAuth();
+//   const { user } = useAuth();
 
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
 //         setLoading(true);
 //         const jobsData = await getJobs();
-//         setJobs(jobsData.jobs);
-//         setFilteredJobs(jobsData.jobs);
-        
-//         const profileData = await getProfile();
-//         setProfile(profileData);
+//         setJobs(jobsData.jobs || []);
+//         setFilteredJobs(jobsData.jobs || []);
 //       } catch (err) {
 //         setError(err.message || 'Failed to fetch data');
 //       } finally {
@@ -48,24 +46,38 @@
 
 //     if (filters.search) {
 //       const searchTerm = filters.search.toLowerCase();
-//       result = result.filter(
-//         (job) =>
-//           job.title.toLowerCase().includes(searchTerm) ||
-//           job.company_name.toLowerCase().includes(searchTerm) ||
-//           job.job_description.toLowerCase().includes(searchTerm)
-//       );
+//       result = result.filter(job => {
+//         return (
+//           (job.title?.toLowerCase()?.includes(searchTerm)) ||
+//           (job.company_name?.toLowerCase()?.includes(searchTerm)) ||
+//           (job.job_description?.toLowerCase()?.includes(searchTerm)) ||
+//           (job.skills?.some(skill => skill.name.toLowerCase().includes(searchTerm)))
+//         )});
 //     }
 
 //     if (filters.employmentType.length > 0) {
-//       result = result.filter((job) =>
-//         filters.employmentType.includes(job.employment_type)
-//       );
+//       result = result.filter(job => 
+//         filters.employmentType.includes(job.employment_type))
 //     }
 
 //     if (filters.minimumPackage) {
 //       const minPackage = parseInt(filters.minimumPackage);
-//       result = result.filter(
-//         (job) => job.package_per_annum >= minPackage
+//       result = result.filter(job => 
+//         job.package_per_annum && job.package_per_annum >= minPackage
+//       );
+//     }
+
+//     if (filters.location) {
+//       result = result.filter(job => 
+//         job.location?.toLowerCase().includes(filters.location.toLowerCase())
+//       );
+//     }
+
+//     if (filters.skills) {
+//       result = result.filter(job =>
+//         job.skills?.some(skill => 
+//           skill.name.toLowerCase().includes(filters.skills.toLowerCase())
+//         )
 //       );
 //     }
 
@@ -114,7 +126,7 @@
 //           <Filters
 //             filters={filters}
 //             onChange={handleFilterChange}
-//             profile={profile}
+//             profile={user?.profile}
 //           />
 //         </Drawer>
 //       </div>
@@ -154,7 +166,7 @@
 // export default JobsList;
 
 
-// src/components/Jobs/JobsList.js
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
@@ -201,6 +213,7 @@ const JobsList = () => {
   useEffect(() => {
     let result = [...jobs];
 
+    // Search filter
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase();
       result = result.filter(job => {
@@ -209,31 +222,39 @@ const JobsList = () => {
           (job.company_name?.toLowerCase()?.includes(searchTerm)) ||
           (job.job_description?.toLowerCase()?.includes(searchTerm)) ||
           (job.skills?.some(skill => skill.name.toLowerCase().includes(searchTerm)))
-        )});
+        );
+      });
     }
 
+    // Employment type filter
     if (filters.employmentType.length > 0) {
       result = result.filter(job => 
         filters.employmentType.includes(job.employment_type))
     }
 
+    // Salary filter
     if (filters.minimumPackage) {
       const minPackage = parseInt(filters.minimumPackage);
-      result = result.filter(job => 
-        job.package_per_annum && job.package_per_annum >= minPackage
-      );
+      result = result.filter(job => {
+        if (!job.package_per_annum) return false;
+        const jobPackage = parseInt(job.package_per_annum.replace(/\D/g, ''));
+        return jobPackage >= minPackage;
+      });
     }
 
+    // Location filter
     if (filters.location) {
       result = result.filter(job => 
         job.location?.toLowerCase().includes(filters.location.toLowerCase())
       );
     }
 
+    // Skills filter
     if (filters.skills) {
+      const skillsTerm = filters.skills.toLowerCase();
       result = result.filter(job =>
         job.skills?.some(skill => 
-          skill.name.toLowerCase().includes(filters.skills.toLowerCase())
+          skill.name.toLowerCase().includes(skillsTerm)
         )
       );
     }
