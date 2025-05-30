@@ -4,15 +4,14 @@
 // const AuthContext = createContext();
 
 // export const AuthProvider = ({ children }) => {
-//   const [user, setUser] = useState(null); // Added user state
+//   const [user, setUser] = useState(null);
 //   const [isLoading, setIsLoading] = useState(true);
 //   const navigate = useNavigate();
 
 //   useEffect(() => {
 //     const token = localStorage.getItem('jobby_jwt');
 //     if (token) {
-//       // You might want to verify token validity here
-//       setUser({ token }); // Set user object with token
+//       setUser({ token });
 //     }
 //     setIsLoading(false);
 //   }, []);
@@ -20,7 +19,7 @@
 //   const login = (token) => {
 //     localStorage.setItem('jobby_jwt', token);
 //     setUser({ token });
-//     navigate('/'); // Changed to navigate to home
+//     navigate('/');
 //   };
 
 //   const logout = () => {
@@ -40,9 +39,12 @@
 
 
 
+
+
 // src/context/AuthContext.js
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getProfile } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -52,23 +54,36 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('jobby_jwt');
-    if (token) {
-      setUser({ token });
-    }
-    setIsLoading(false);
+    const initializeAuth = async () => {
+      const token = localStorage.getItem('jobby_jwt');
+      if (token) {
+        try {
+          const profile = await getProfile();
+          setUser({ token, profile });
+        } catch (error) {
+          localStorage.removeItem('jobby_jwt');
+        }
+      }
+      setIsLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
-  const login = (token) => {
+  const login = async (token) => {
     localStorage.setItem('jobby_jwt', token);
-    setUser({ token });
-    navigate('/');
+    try {
+      const profile = await getProfile();
+      setUser({ token, profile });
+      navigate('/');
+    } catch (error) {
+      console.error('Failed to fetch profile:', error);
+    }
   };
 
   const logout = () => {
     localStorage.removeItem('jobby_jwt');
     setUser(null);
-    navigate('/login');
   };
 
   return (

@@ -79,15 +79,8 @@ function App() {
           <Header />
           <main className="main-content">
             <Routes>
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
-                }
-              />
               <Route
                 path="/jobs"
                 element={
