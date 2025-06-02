@@ -1,4 +1,4 @@
-.filters-container {
+/* .filters-container {
   padding: 1rem;
 }
 
@@ -35,4 +35,240 @@
   font-size: 0.9rem;
   color: var(--text-color);
   opacity: 0.8;
+} */
+
+/*
+  Filters.css
+
+  This stylesheet defines the visual styles for the Filters component.
+  It uses CSS variables to enable easy theme switching (e.g., light/dark mode).
+
+  To implement dark mode:
+  1. Define a `body.dark-mode` (or a similar class on a parent container)
+     in your global CSS (e.g., App.css or index.css) that overrides these
+     CSS variables.
+  2. In your React application's main component (e.g., App.js),
+     toggle this `dark-mode` class on the `body` element when the theme changes.
+  3. Ensure Material-UI's `ThemeProvider` is configured to provide
+     a dark palette for Material-UI components.
+*/
+
+/* Default (Light Mode) CSS Variables */
+:root {
+  --background-color-light: #ffffff;
+  --text-color-light: #333333;
+  --border-color-light: #e0e0e0;
+  --divider-color-light: rgba(0, 0, 0, 0.12);
+  --input-border-color-light: rgba(0, 0, 0, 0.23);
+  --input-hover-border-color-light: rgba(0, 0, 0, 0.87);
+  --input-focused-border-color-light: #1976d2; /* Material-UI default primary */
+  --form-label-color-light: rgba(0, 0, 0, 0.6);
+}
+
+/* Dark Mode CSS Variables (applied when body has 'dark-mode' class) */
+body.dark-mode {
+  --background-color-dark: #121212; /* Dark background for the app */
+  --surface-color-dark: #1e1e1e;   /* Slightly lighter dark for cards/surfaces */
+  --text-color-dark: #ffffff;
+  --border-color-dark: #333333;
+  --divider-color-dark: rgba(255, 255, 255, 0.12);
+  --input-border-color-dark: rgba(255, 255, 255, 0.7);
+  --input-hover-border-color-dark: #ffffff;
+  --input-focused-border-color-dark: #90caf9; /* Material-UI default primary in dark mode */
+  --form-label-color-dark: rgba(255, 255, 255, 0.7);
+}
+
+/* Base styling for the filters container */
+.filters-container {
+  padding: 1rem;
+  /* Use CSS variables for background and text colors */
+  background-color: var(--background-color-light); /* Default to light mode background */
+  color: var(--text-color-light); /* Default to light mode text color */
+  border-radius: 8px; /* Rounded corners for the container */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for theme change */
+}
+
+/* Apply dark mode styles to the container when 'dark-mode' is active */
+body.dark-mode .filters-container {
+  background-color: var(--surface-color-dark); /* Use dark surface color */
+  color: var(--text-color-dark); /* Use dark text color */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Darker shadow for dark mode */
+}
+
+/* Styling for the Divider component */
+/* Material-UI's Divider usually picks up theme colors, but this provides an override */
+.filter-divider.MuiDivider-root {
+  background-color: var(--divider-color-light); /* Default to light mode divider color */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+body.dark-mode .filter-divider.MuiDivider-root {
+  background-color: var(--divider-color-dark); /* Dark mode divider color */
+}
+
+/* Styling for FormLabels (e.g., "Filter By Location", "Type of Employment") */
+.MuiFormLabel-root {
+  color: var(--form-label-color-light) !important; /* Default label color */
+  font-weight: bold; /* Ensure font weight is applied */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+body.dark-mode .MuiFormLabel-root {
+  color: var(--form-label-color-dark) !important; /* Dark mode label color */
+}
+
+/* Styling for TextField borders */
+.MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-border-color-light) !important; /* Default border color */
+  transition: border-color 0.3s ease; /* Smooth transition */
+}
+
+body.dark-mode .MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-border-color-dark) !important; /* Dark mode border color */
+}
+
+/* Styling for TextField on hover */
+.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-hover-border-color-light) !important; /* Default hover border color */
+}
+
+body.dark-mode .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-hover-border-color-dark) !important; /* Dark mode hover border color */
+}
+
+/* Styling for TextField when focused */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-focused-border-color-light) !important; /* Default focused border color */
+}
+
+body.dark-mode .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--input-focused-border-color-dark) !important; /* Dark mode focused border color */
+}
+
+/* Styling for TextField input text color */
+.MuiInputBase-input {
+  color: var(--text-color-light) !important; /* Default input text color */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+body.dark-mode .MuiInputBase-input {
+  color: var(--text-color-dark) !important; /* Dark mode input text color */
+}
+
+/* Styling for TextField label when it's shrunk (e.g., when input has value) */
+.MuiInputLabel-shrink {
+  color: var(--form-label-color-light) !important; /* Default shrunk label color */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+body.dark-mode .MuiInputLabel-shrink {
+  color: var(--form-label-color-dark) !important; /* Dark mode shrunk label color */
+}
+
+/* Styling for Checkbox and Radio button labels */
+.MuiFormControlLabel-label {
+  color: var(--text-color-light) !important; /* Default label color for checkboxes/radios */
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+body.dark-mode .MuiFormControlLabel-label {
+  color: var(--text-color-dark) !important; /* Dark mode label color for checkboxes/radios */
+}
+
+/* Styling for the clear filters button (Material-UI Button) */
+/* Material-UI Buttons should generally adapt via ThemeProvider, but custom styles can be added */
+.filter-actions .MuiButton-outlined {
+  border-color: var(--input-border-color-light); /* Default border for outlined button */
+  color: var(--text-color-light); /* Default text color for outlined button */
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode .filter-actions .MuiButton-outlined {
+  border-color: var(--input-border-color-dark); /* Dark mode border */
+  color: var(--text-color-dark); /* Dark mode text color */
+}
+
+.filter-actions .MuiButton-outlined:hover {
+  border-color: var(--input-hover-border-color-light); /* Default hover border */
+  background-color: rgba(0, 0, 0, 0.04); /* Light hover background */
+}
+
+body.dark-mode .filter-actions .MuiButton-outlined:hover {
+  border-color: var(--input-hover-border-color-dark); /* Dark mode hover border */
+  background-color: rgba(255, 255, 255, 0.08); /* Dark hover background */
+}
+
+/* Disabled button state */
+.filter-actions .MuiButton-outlined.Mui-disabled {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: rgba(0, 0, 0, 0.26) !important;
+}
+
+body.dark-mode .filter-actions .MuiButton-outlined.Mui-disabled {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+
+/*
+  The following profile-related styles were in the original CSS but
+  are not present in the provided JSX for the Filters component.
+  Keeping them here for completeness if they are part of a larger layout.
+*/
+.profile-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--text-color-light); /* Ensure text color adapts */
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .profile-section {
+  color: var(--text-color-dark);
+}
+
+.profile-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+  background-color: var(--background-color-light); /* Avatar background */
+  border: 1px solid var(--border-color-light); /* Avatar border */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .profile-avatar {
+  background-color: var(--surface-color-dark);
+  border: 1px solid var(--border-color-dark);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-info h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  color: var(--text-color-light); /* Ensure text color adapts */
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .profile-info h3 {
+  color: var(--text-color-dark);
+}
+
+.profile-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-color-light); /* Ensure text color adapts */
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .profile-info p {
+  color: var(--text-color-dark);
 }

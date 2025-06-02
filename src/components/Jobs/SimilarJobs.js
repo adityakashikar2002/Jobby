@@ -27,7 +27,7 @@ const SimilarJobs = ({ jobs }) => {
             transition={{ duration: 0.3 }}
           >
             <div className="similar-job-header">
-              <div className="company-logo">
+              <div className="company-logo-card">
                 <img src={job.company_logo_url} alt={job.company_name} />
               </div>
               <div className="job-title-container">
