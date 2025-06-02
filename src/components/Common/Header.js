@@ -33,7 +33,7 @@ const Header = () => {
             animate={{ scale: 1 }}
             transition={{ delay: 0.2 }}
           >
-            JobPortal
+            Joboria
           </motion.span>
         </Link>
 
@@ -76,7 +76,7 @@ const Header = () => {
                 <div className="dropdown-menu">
                   <div className="profile-info">
                     <h4>{user.profile?.name || 'User'}</h4>
-                    <p>{user.profile?.short_bio || 'Welcome to JobPortal'}</p>
+                    <p>{user.profile?.short_bio || 'Welcome to Joboria'}</p>
                   </div>
                   <button 
                     className="logout-button"

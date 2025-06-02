@@ -21,7 +21,7 @@ const Footer = () => {
             animate={{ y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <span>JobPortal</span>
+            <span>Joboria</span>
             <p>Find your dream job today</p>
           </motion.div>
 
@@ -55,7 +55,7 @@ const Footer = () => {
             transition={{ delay: 0.5 }}
           >
             <h3>Contact Us</h3>
-            <p>Email: info@jobportal.com</p>
+            <p>Email: info@joboria.com</p>
             <p>Phone: +1 (123) 456-7890</p>
           </motion.div>
         </div>
@@ -66,7 +66,7 @@ const Footer = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <p>&copy; {new Date().getFullYear()} JobPortal. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Joboria. All rights reserved.</p>
         </motion.div>
       </motion.div>
     </footer>
